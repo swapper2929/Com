@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ôn Thi Lịch Sử Đảng</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --secondary: #2196f3;
+            --success: #4caf50;
+            --danger: #f44336;
+            --bg: #f8f9fa;
+        }
+        body {
+            font-family: -apple-system, system-ui, sans-serif;
+            background-color: var(--bg);
+            margin: 0; padding: 0;
+            -webkit-user-select: none;
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        .q-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .q-text { font-weight: 700; font-size: 1.1em; color: #333; margin-bottom: 15px; display: block; }
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .opt {
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: 0.2s;
+        }
+        .opt input { margin-right: 15px; transform: scale(1.3); }
+        .opt:active { background: #f0f0f0; }
+        
+        /* Kết quả */
+        .correct { background: #e8f5e9 !important; border-color: var(--success) !important; color: #2e7d32; }
+        .wrong { background: #ffebee !important; border-color: var(--danger) !important; color: #c62828; }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 20px 0 50px;
+        }
+        #score-board {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            width: 85%;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1999;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h3 style="margin:0">TRẮC NGHIỆM LỊCH SỬ ĐẢNG (48 CÂU)</h3>
+</header>
+
+<div class="container">
+    <div id="quiz-container"></div>
+    <button class="btn-submit" onclick="showResults()">NỘP BÀI TÍNH ĐIỂM</button>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div id="score-board">
+    <h1 id="final-score" style="color:var(--primary); font-size: 3em; margin: 0;">0/48</h1>
+    <p id="msg" style="font-size: 1.2em;"></p>
+    <button class="btn-submit" style="margin-bottom:0" onclick="location.reload()">LÀM LẠI</button>
+</div>
+
+<script>
+    const questions = [
+        {q: "Hội nghị Hợp nhất thành lập Đảng CSVN (3/2/1930) thông qua văn kiện nào?", a: ["Chánh cương, Sách lược vắn tắt", "Điều lệ, Chương trình vắn tắt", "Cả 2 phương án trên", "Luận cương chính trị"], c: 2},
+        {q: "Ai là Tổng Bí thư đầu tiên của Đảng?", a: ["Hồ Chí Minh", "Trần Văn Cung", "Trần Phú", "Lê Hồng Phong"], c: 2},
+        {q: "Chiến tranh thế giới II bùng nổ vào thời gian nào?", a: ["1937", "1938", "1939", "1940"], c: 2},
+        {q: "Hội nghị nào chủ trương thành lập nước Việt Nam Dân chủ Cộng hòa?", a: ["Tháng 10-1930", "Tháng 11-1939", "Tháng 11-1940", "Tháng 5-1941"], c: 3},
+        {q: "Đội Việt Nam Tuyên truyền Giải phóng quân thành lập ngày nào?", a: ["22-12-1944", "19-12-1946", "15-5-1945", "10-5-1945"], c: 0},
+        {q: "Đội Việt Nam Tuyên truyền Giải phóng quân lúc đầu có bao nhiêu chiến sĩ?", a: ["33", "34", "35", "36"], c: 1},
+        {q: "Hội nghị toàn quốc của Đảng họp ở Tân Trào thời gian nào?", a: ["15-19/8/1941", "13-15/8/1945", "15-19/8/1945", "13-15/8/1944"], c: 1},
+        {q: "Quốc dân Đại hội Tân Trào họp ở huyện nào?", a: ["Chiêm Hóa", "Định Hóa", "Sơn Dương", "Đại Từ"], c: 2},
+        {q: "Kẻ thù chính ngay sau Cách mạng Tháng Tám 1945 là:", a: ["Thực dân Pháp", "Tưởng Giới Thạch", "Thực dân Anh", "Giặc đói/Giặc dốt"], c: 0},
+        {q: "Phong trào chống nạn mù chữ sau năm 1945 gọi là:", a: ["Văn hóa mới", "Bình dân học vụ", "Bài trừ tệ nạn", "Xóa văn hóa nô dịch"], c: 1},
+        {q: "Quốc hội đầu tiên của nước ta được bầu vào ngày nào?", a: ["4/1/1946", "5/1/1946", "6/1/1946", "7/1/1946"], c: 2},
+        {q: "Hà Nội được xác định là Thủ đô vào năm nào?", a: ["1945", "1946", "1954", "1930"], c: 1},
+        {q: "Chủ tịch Hồ Chí Minh ra Lời kêu gọi toàn quốc kháng chiến vào:", a: ["18-9-1946", "Đêm 19-12-1946", "20-12-1946", "19-8-1945"], c: 1},
+        {q: "Văn kiện nào được coi là Cương lĩnh kháng chiến?", a: ["Lời kêu gọi toàn quốc kháng chiến", "Chỉ thị Toàn dân kháng chiến", "Kháng chiến nhất định thắng lợi", "Cả 3 văn kiện trên"], c: 3},
+        {q: "Căn cứ địa cách mạng của cả nước trong kháng chiến chống Pháp là:", a: ["Tây Bắc", "Việt Bắc", "Hà Nội", "Điện Biên Phủ"], c: 1},
+        {q: "Năm Việt Nam bắt đầu đặt quan hệ ngoại giao với Trung Quốc, Liên Xô:", a: ["1945", "1948", "1950", "1953"], c: 2},
+        {q: "Đảng tuyên bố ra hoạt động công khai tại Đại hội lần thứ mấy?", a: ["Lần I", "Lần II", "Lần III", "Lần IV"], c: 1},
+        {q: "Đại hội Đảng lần thứ II diễn ra ở đâu?", a: ["Ma Cao", "Tân Trào", "Vinh Quang, Chiêm Hóa", "Việt Bắc"], c: 2},
+        {q: "Đại hội II bầu ai làm Tổng Bí thư Đảng Lao động Việt Nam?", a: ["Hồ Chí Minh", "Trần Phú", "Trường Chinh", "Lê Duẩn"], c: 2},
+        {q: "Chiến dịch Điện Biên Phủ được thông qua phương án khi nào?", a: ["20-11-1953", "3-12-1953", "6-12-1953", "25-1-1954"], c: 2},
+        {q: "Ai là Tư lệnh kiêm Bí thư Đảng ủy chiến dịch Điện Biên Phủ?", a: ["Hoàng Văn Thái", "Văn Tiến Dũng", "Phạm Văn Đồng", "Võ Nguyên Giáp"], c: 3},
+        {q: "Chiến dịch Điện Biên Phủ diễn ra trong bao nhiêu ngày?", a: ["54", "55", "56", "59"], c: 2},
+        {q: "Hội nghị quốc tế chấm dứt chiến tranh Đông Dương diễn ra tại:", a: ["Pari", "Giơ-ne-vơ", "Postdam", "New York"], c: 1},
+        {q: "Kháng chiến chống Pháp kéo dài bao nhiêu năm?", a: ["7 năm", "8 năm", "9 năm", "10 năm"], c: 2},
+        {q: "Quân ta tiếp quản Thủ đô Hà Nội ngày nào?", a: ["10-10-1954", "10-10-1955", "10-10-1956", "1-10-1954"], c: 0},
+        {q: "Trận 'Điện Biên Phủ trên không' bằng B52 kéo dài bao nhiêu ngày?", a: ["10 ngày", "11 ngày", "12 ngày đêm", "13 ngày"], c: 2},
+        {q: "Hiệp định Pari được ký kết vào ngày nào?", a: ["20/7/1954", "22/12/1954", "27/2/1973", "27/1/1973"], c: 3},
+        {q: "Quốc hội khóa mấy đổi tên nước thành CHXHCN Việt Nam?", a: ["Khóa 6", "Khóa 7", "Khóa 8", "Khóa 9"], c: 0},
+        {q: "Câu nói 'Miền Nam là máu của máu Việt Nam...' là của ai?", a: ["Hồ Chí Minh", "Trường Chinh", "Lê Duẩn", "Phạm Văn Đồng"], c: 0},
+        {q: "Đại hội nào coi 'Giáo dục là quốc sách hàng đầu'?", a: ["Lần V", "Lần VI", "Lần VII", "Lần VIII"], c: 2},
+        {q: "Phong trào công nhân hoàn toàn tự giác khi nào?", a: ["1920", "1925", "1929", "2/1930"], c: 3},
+        {q: "Ba tổ chức cộng sản hoàn thành hợp nhất khi nào?", a: ["3/2/1930", "7/2/1930", "24/2/1930", "24/2/1931"], c: 2},
+        {q: "Tháng bùng nổ Chiến tranh thế giới thứ hai?", a: ["11/1937", "9/1938", "9/1939", "11/1939"], c: 2},
+        {q: "Nhật vào xâm lược nước ta khi nào?", a: ["9/1939", "6/1939", "6/1940", "9/1940"], c: 3},
+        {q: "Chỉ thị 'Nhật - Pháp bắn nhau và hành động của chúng ta' ra đời ngày:", a: ["9/3/1945", "12/3/1945", "9/3/1946", "12/3/1946"], c: 1},
+        {q: "Tình hình nước ta sau 1945 được ví như:", a: ["Nước sôi lửa bỏng", "Ngàn cân treo sợi tóc", "Thời kỳ trứng nước", "Lấy trứng chọi đá"], c: 1},
+        {q: "Phong trào diệt giặc dốt sau 1945:", a: ["Đời sống mới", "Bình dân học vụ", "Xóa văn hóa nô dịch", "Truyền bá chữ quốc ngữ"], c: 1},
+        {q: "Bầu Quốc hội khóa I vào ngày:", a: ["4/1/1946", "5/1/1946", "6/1/1946", "7/1/1946"], c: 2},
+        {q: "Đêm ra Lời kêu gọi toàn quốc kháng chiến:", a: ["18/12/1946", "19/12/1946", "20/12/1946", "22/12/1946"], c: 1},
+        {q: "Nước ta đã trải qua bao nhiêu kỳ Đại hội Đảng (đến 2021)?", a: ["12", "13", "14", "15"], c: 1},
+        {q: "Tổng Bí thư hiện nay (được bầu tháng 8/2024)?", a: ["Phan Văn Giang", "Tô Lâm", "Đỗ Văn Chiến", "Lương Cường"], c: 1},
+        {q: "Số đại biểu tham dự Đại hội XIII (2021) của Đảng?", a: ["1658", "1586", "1587", "1685"], c: 2},
+        {q: "Đại hội đổi tên Đảng Lao động thành Đảng Cộng sản Việt Nam?", a: ["Đại hội IV", "Đại hội V", "Đại hội VI", "Đại hội III"], c: 0},
+        {q: "Thành phố Sài Gòn mang tên TP. Hồ Chí Minh từ:", a: ["1976", "1969", "1975", "1945"], c: 0},
+        {q: "Tổ chức tiền thân của Đảng CSVN là:", a: ["Hội cứu quốc", "Hội VN Cách mạng Thanh niên", "Hội VN yêu nước", "Hội người VN yêu nước"], c: 1},
+        {q: "Đại hội II (1951) bầu ai làm Tổng Bí thư?", a: ["Hồ Chí Minh", "Trường Chinh", "Lê Duẩn", "Phạm Văn Đồng"], c: 1},
+        {q: "Đại hội XII (2016) bầu ai làm Tổng Bí thư?", a: ["Nguyễn Phú Trọng", "Lê Khả Phiêu", "Nông Đức Mạnh", "Tô Lâm"], c: 0},
+        {q: "Tổng Bí thư được bầu tại Đại hội III (1960)?", a: ["Lê Duẩn", "Trường Chinh", "Lê Hồng Phong", "Nguyễn Văn Linh"], c: 0}
+    ];
+
+    const container = document.getElementById('quiz-container');
+
+    // Khởi tạo câu hỏi
+    questions.forEach((q, i) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.innerHTML = `
+            <span class="q-text">Câu ${i+1}: ${q.q}</span>
+            <div class="options">
+                ${q.a.map((opt, idx) => `
+                    <label class="opt" id="label-${i}-${idx}">
+                        <input type="radio" name="q${i}" value="${idx}"> ${opt}
+                    </label>
+                `).join('')}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+
+    function showResults() {
+        let score = 0;
+        questions.forEach((q, i) => {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const correctLabel = document.getElementById(`label-${i}-${q.c}`);
+            
+            if (selected) {
+                const val = parseInt(selected.value);
+                if (val === q.c) {
+                    score++;
+                    correctLabel.classList.add('correct');
+                } else {
+                    document.getElementById(`label-${i}-${val}`).classList.add('wrong');
+                    correctLabel.classList.add('correct');
+                }
+            } else {
+                correctLabel.classList.add('correct');
+            }
+        });
+
+        document.getElementById('final-score').innerText = `${score}/48`;
+        document.getElementById('msg').innerText = score > 40 ? "Xuất sắc!" : (score > 24 ? "Đạt yêu cầu" : "Cần học kỹ hơn");
+        document.getElementById('score-board').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+        window.scrollTo(0,0);
+    }
+</script>
+
+</body>
+</html>
