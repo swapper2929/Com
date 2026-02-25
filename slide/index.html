@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PowerPoint - Nhóm 1</title>
+    <title>PowerPoint - Nhóm 1 (Fullscreen & Phím)</title>
     <!-- Font Awesome & Google Font -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #1e1e2f; /* nền tối cho cảm giác trình chiếu */
+            background: #0c0c14;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -31,19 +31,21 @@
             max-width: 100%;
             background: #0b0b15;
             border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
             overflow: hidden;
             padding: 20px;
+            transition: all 0.2s;
         }
 
         /* vùng hiển thị slide */
         .slide-viewer {
-            background: #2a2a3a;
+            background: #1e1e2a;
             border-radius: 32px;
             overflow: hidden;
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            aspect-ratio: 16 / 9; /* tỉ lệ khung hình giống slide */
+            aspect-ratio: 16 / 9;
             width: 100%;
+            position: relative;
         }
 
         .slide-frame {
@@ -51,7 +53,7 @@
             height: 100%;
             border: none;
             display: block;
-            background: white; /* fallback */
+            background: white;
         }
 
         /* thanh điều khiển */
@@ -60,13 +62,15 @@
             align-items: center;
             justify-content: space-between;
             margin-top: 22px;
-            padding: 0 12px;
+            padding: 0 8px;
             color: #a9b7d4;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
         .nav-buttons {
             display: flex;
-            gap: 16px;
+            gap: 12px;
         }
 
         .nav-btn {
@@ -105,6 +109,7 @@
             font-size: 1rem;
             border: 1px solid #40405c;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
         .slide-indicator i {
@@ -113,8 +118,8 @@
         }
 
         .progress-bar {
-            flex: 1;
-            margin: 0 30px;
+            flex: 2;
+            min-width: 160px;
             height: 8px;
             background: #2f2f41;
             border-radius: 20px;
@@ -137,6 +142,10 @@
             border-radius: 40px;
             border: 1px solid #40405c;
             color: #c8d3f0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 280px;
         }
 
         .slide-title i {
@@ -144,23 +153,47 @@
             color: #f39c12;
         }
 
-        @media (max-width: 700px) {
+        /* nút fullscreen */
+        .fullscreen-btn {
+            background: #2f2f41;
+            border: 1px solid #40405c;
+            color: #d0d9f0;
+            width: 48px;
+            height: 48px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .fullscreen-btn:hover {
+            background: #3e3e5e;
+            color: white;
+            border-color: #6d6d9c;
+            transform: scale(1.05);
+        }
+
+        /* responsive */
+        @media (max-width: 850px) {
             .control-bar {
-                flex-wrap: wrap;
-                gap: 15px;
+                justify-content: center;
             }
-            .progress-bar {
-                order: 3;
+            .slide-title {
+                max-width: 100%;
                 width: 100%;
-                margin: 0;
+                text-align: center;
+                order: 4;
             }
         }
     </style>
 </head>
 <body>
-    <div class="presentation-container">
+    <div class="presentation-container" id="presentationContainer">
         <!-- khung hiển thị slide -->
-        <div class="slide-viewer">
+        <div class="slide-viewer" id="slideViewer">
             <iframe class="slide-frame" id="slideFrame" src="cau1.html" title="Slide"></iframe>
         </div>
 
@@ -180,10 +213,15 @@
                 <div class="progress-fill" id="progressFill" style="width: 33.3%;"></div>
             </div>
 
-            <div class="slide-title">
+            <div class="slide-title" id="slideTitle">
                 <i class="fas fa-gem"></i>
                 <span id="slideName">Câu 1: Kiến thức nghề</span>
             </div>
+
+            <!-- nút fullscreen -->
+            <button class="fullscreen-btn" id="fullscreenBtn" title="Toàn màn hình">
+                <i class="fas fa-expand"></i>
+            </button>
         </div>
     </div>
 
@@ -195,7 +233,7 @@
             { file: 'cau3.html', name: 'Câu 3: Học tập suốt đời' }
         ];
 
-        let currentIndex = 0; // bắt đầu từ slide 0 (cau1.html)
+        let currentIndex = 0; // bắt đầu từ slide 0
         const slideFrame = document.getElementById('slideFrame');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
@@ -203,6 +241,9 @@
         const totalSpan = document.getElementById('totalSlides');
         const progressFill = document.getElementById('progressFill');
         const slideNameSpan = document.getElementById('slideName');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const container = document.getElementById('presentationContainer');
+        const slideViewer = document.getElementById('slideViewer');
 
         // Cập nhật tổng số slide
         totalSpan.textContent = slides.length;
@@ -248,10 +289,13 @@
         // Tải slide đầu tiên
         loadSlide(0);
 
-        // (Tùy chọn) Lắng nghe phím mũi tên trái/phải để chuyển slide
+        // Điều khiển bằng phím mũi tên trái/phải
         window.addEventListener('keydown', (e) => {
+            // Chỉ xử lý khi không phải đang gõ trong ô input/textarea
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
             if (e.key === 'ArrowLeft') {
-                e.preventDefault();
+                e.preventDefault(); // tránh cuộn trang
                 if (!prevBtn.disabled) {
                     prevBtn.click();
                 }
@@ -262,6 +306,49 @@
                 }
             }
         });
+
+        // Chức năng toàn màn hình
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                // Vào fullscreen (toàn bộ container)
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) { // Safari
+                    container.webkitRequestFullscreen();
+                } else if (container.msRequestFullscreen) { // IE/Edge
+                    container.msRequestFullscreen();
+                }
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            } else {
+                // Thoát fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            }
+        }
+
+        // Lắng nghe sự kiện thay đổi fullscreen để cập nhật icon
+        document.addEventListener('fullscreenchange', updateFullscreenIcon);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
+        document.addEventListener('msfullscreenchange', updateFullscreenIcon);
+
+        function updateFullscreenIcon() {
+            if (document.fullscreenElement) {
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            } else {
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            }
+        }
+
+        // Tối ưu: focus vào container để bắt phím tốt hơn (không bắt buộc)
+        container.focus();
     </script>
 </body>
 </html>
