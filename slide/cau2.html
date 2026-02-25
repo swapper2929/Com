@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhóm 1 - Câu 2: Kỹ năng quan trọng nhất</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f0f9f1 0%, #dcfce7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .slide {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(134, 239, 172, 0.3);
+            padding: 2.5rem;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #bbf7d0;
+            padding-bottom: 1.5rem;
+        }
+
+        .header .group-tag {
+            background: #166534;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+
+        .header h2 {
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: #14532d;
+            line-height: 1.3;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2.5rem 0;
+        }
+
+        .skill-item {
+            background: white;
+            border-radius: 3rem;
+            padding: 1.2rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e4f5e9;
+            transition: all 0.2s;
+        }
+
+        .skill-item:hover {
+            border-color: #86efac;
+            box-shadow: 0 12px 20px -12px rgba(34, 197, 94, 0.3);
+            transform: scale(1.01);
+        }
+
+        .skill-icon {
+            background: #f0fdf4;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #22c55e;
+            flex-shrink: 0;
+        }
+
+        .skill-content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.3rem;
+        }
+
+        .skill-content p {
+            color: #334155;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .footer-insight {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 40px;
+            padding: 1.3rem 2rem;
+            text-align: center;
+            border: 1px dashed #86efac;
+            margin-top: 1.5rem;
+            color: #166534;
+            font-weight: 500;
+        }
+
+        .footer-insight i {
+            margin-right: 8px;
+            color: #22c55e;
+        }
+
+        @media (max-width: 600px) {
+            .slide { padding: 1.5rem; }
+            .skill-item { flex-direction: column; text-align: center; gap: 0.5rem; padding: 1.5rem; }
+            .header h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="header">
+            <span class="group-tag"><i class="fas fa-cogs" style="margin-right: 6px;"></i>Nhóm 1</span>
+            <h2>Kĩ năng nào quan trọng nhất trong hầu hết các nghề?</h2>
+        </div>
+
+        <div class="skills-list">
+            <!-- Giao tiếp -->
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-comments"></i></div>
+                <div class="skill-content">
+                    <h3>Giao tiếp</h3>
+                    <p>Truyền đạt rõ ràng, lắng nghe tích cực, làm việc hiệu quả với đồng nghiệp, khách hàng.</p>
+                </div>
+            </div>
+            <!-- Giải quyết vấn đề -->
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-puzzle-piece"></i></div>
+                <div class="skill-content">
+                    <h3>Giải quyết vấn đề</h3>
+                    <p>Nhận diện, phân tích tình huống và tìm ra giải pháp tối ưu.</p>
+                </div>
+            </div>
+            <!-- Làm việc nhóm -->
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-people-group"></i></div>
+                <div class="skill-content">
+                    <h3>Làm việc nhóm</h3>
+                    <p>Phối hợp, chia sẻ trách nhiệm, hỗ trợ nhau vì mục tiêu chung.</p>
+                </div>
+            </div>
+            <!-- Quản lý thời gian -->
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-clock"></i></div>
+                <div class="skill-content">
+                    <h3>Quản lý thời gian</h3>
+                    <p>Sắp xếp công việc khoa học, ưu tiên nhiệm vụ và hoàn thành đúng hạn.</p>
+                </div>
+            </div>
+            <!-- Thích ứng -->
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-arrows-spin"></i></div>
+                <div class="skill-content">
+                    <h3>Thích ứng</h3>
+                    <p>Linh hoạt học hỏi cái mới, điều chỉnh trước những thay đổi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-insight">
+            <i class="fas fa-star"></i> Những kỹ năng này là nền tảng – dù bạn làm bất cứ nghề gì!
+        </div>
+    </div>
+</body>
+</html>

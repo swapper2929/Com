@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhóm 1 - Câu 3: Học tập suốt đời</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #fef5e7 0%, #ffedd5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .slide {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(253, 186, 116, 0.3);
+            padding: 2.5rem;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #fed7aa;
+            padding-bottom: 1.5rem;
+        }
+
+        .header .group-tag {
+            background: #9a3412;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+
+        .header h2 {
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: #7c2d12;
+            line-height: 1.3;
+        }
+
+        .reasons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .reason-block {
+            flex: 1 1 200px;
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border: 1px solid #ffedd5;
+            transition: all 0.2s;
+        }
+
+        .reason-block:hover {
+            background: #fff7ed;
+            border-color: #fdba74;
+            box-shadow: 0 20px 25px -12px #fdba74;
+        }
+
+        .reason-icon {
+            font-size: 3rem;
+            color: #ea580c;
+            margin-bottom: 1.2rem;
+            background: #fff1e6;
+            width: 5.5rem;
+            height: 5.5rem;
+            border-radius: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reason-block h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d1b0e;
+            margin-bottom: 0.8rem;
+        }
+
+        .reason-block p {
+            color: #5c4b3a;
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+
+        .quote {
+            background: rgba(255, 247, 237, 0.8);
+            border-radius: 3rem;
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            border-left: 8px solid #f97316;
+            font-style: italic;
+            color: #3c2a1c;
+            font-weight: 500;
+        }
+
+        .quote i {
+            color: #f97316;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .slide { padding: 1.5rem; }
+            .header h2 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="header">
+            <span class="group-tag"><i class="fas fa-book-open" style="margin-right: 6px;"></i>Nhóm 1</span>
+            <h2>Vì sao phải học tập suốt đời khi đã đi làm?</h2>
+        </div>
+
+        <div class="reasons">
+            <!-- Thay đổi công nghệ -->
+            <div class="reason-block">
+                <div class="reason-icon"><i class="fas fa-rocket"></i></div>
+                <h3>Kiến thức thay đổi nhanh</h3>
+                <p>Công nghệ, kỹ thuật mới liên tục xuất hiện. Học để không bị tụt hậu.</p>
+            </div>
+            <!-- Đáp ứng yêu cầu công việc -->
+            <div class="reason-block">
+                <div class="reason-icon"><i class="fas fa-briefcase"></i></div>
+                <h3>Đáp ứng yêu cầu mới</h3>
+                <p>Công việc luôn có thử thách, đòi hỏi kỹ năng bổ sung – học để thích nghi.</p>
+            </div>
+            <!-- Phát triển bản thân -->
+            <div class="reason-block">
+                <div class="reason-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Thăng tiến & phát triển</h3>
+                <p>Trau dồi liên tục mở ra cơ hội thăng tiến, chuyển đổi nghề nghiệp.</p>
+            </div>
+            <!-- Theo kịp xã hội -->
+            <div class="reason-block">
+                <div class="reason-icon"><i class="fas fa-heart"></i></div>
+                <h3>Làm giàu đời sống</h3>
+                <p>Nâng cao hiểu biết, hòa nhập với thay đổi của xã hội, phát triển tinh thần.</p>
+            </div>
+        </div>
+
+        <div class="quote">
+            <i class="fas fa-quote-left"></i> Học tập suốt đời không chỉ giúp bạn giỏi hơn mà còn giúp bạn sống sâu sắc hơn.
+        </div>
+    </div>
+</body>
+</html>
