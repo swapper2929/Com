@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPoint - Nhóm 1</title>
+    <!-- Font Awesome & Google Font -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1e1e2f; /* nền tối cho cảm giác trình chiếu */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .presentation-container {
+            width: 1300px;
+            max-width: 100%;
+            background: #0b0b15;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* vùng hiển thị slide */
+        .slide-viewer {
+            background: #2a2a3a;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            aspect-ratio: 16 / 9; /* tỉ lệ khung hình giống slide */
+            width: 100%;
+        }
+
+        .slide-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background: white; /* fallback */
+        }
+
+        /* thanh điều khiển */
+        .control-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 22px;
+            padding: 0 12px;
+            color: #a9b7d4;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .nav-btn {
+            background: #2f2f41;
+            border: none;
+            color: #d0d9f0;
+            width: 48px;
+            height: 48px;
+            border-radius: 30px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            border: 1px solid #40405c;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #3e3e5e;
+            color: white;
+            border-color: #6d6d9c;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-indicator {
+            background: #2f2f41;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 1rem;
+            border: 1px solid #40405c;
+            letter-spacing: 0.5px;
+        }
+
+        .slide-indicator i {
+            margin-right: 8px;
+            color: #7aa2f7;
+        }
+
+        .progress-bar {
+            flex: 1;
+            margin: 0 30px;
+            height: 8px;
+            background: #2f2f41;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #7aa2f7, #bb9af7);
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+
+        .slide-title {
+            font-size: 1rem;
+            font-weight: 500;
+            background: #2f2f41;
+            padding: 10px 24px;
+            border-radius: 40px;
+            border: 1px solid #40405c;
+            color: #c8d3f0;
+        }
+
+        .slide-title i {
+            margin-right: 8px;
+            color: #f39c12;
+        }
+
+        @media (max-width: 700px) {
+            .control-bar {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .progress-bar {
+                order: 3;
+                width: 100%;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- khung hiển thị slide -->
+        <div class="slide-viewer">
+            <iframe class="slide-frame" id="slideFrame" src="cau1.html" title="Slide"></iframe>
+        </div>
+
+        <!-- thanh điều khiển -->
+        <div class="control-bar">
+            <div class="nav-buttons">
+                <button class="nav-btn" id="prevBtn" disabled><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="slide-indicator">
+                <i class="fas fa-image"></i>
+                <span id="currentSlide">1</span> / <span id="totalSlides">3</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 33.3%;"></div>
+            </div>
+
+            <div class="slide-title">
+                <i class="fas fa-gem"></i>
+                <span id="slideName">Câu 1: Kiến thức nghề</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Danh sách các slide (các file html)
+        const slides = [
+            { file: 'cau1.html', name: 'Câu 1: Kiến thức nghề' },
+            { file: 'cau2.html', name: 'Câu 2: Kỹ năng quan trọng' },
+            { file: 'cau3.html', name: 'Câu 3: Học tập suốt đời' }
+        ];
+
+        let currentIndex = 0; // bắt đầu từ slide 0 (cau1.html)
+        const slideFrame = document.getElementById('slideFrame');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const currentSpan = document.getElementById('currentSlide');
+        const totalSpan = document.getElementById('totalSlides');
+        const progressFill = document.getElementById('progressFill');
+        const slideNameSpan = document.getElementById('slideName');
+
+        // Cập nhật tổng số slide
+        totalSpan.textContent = slides.length;
+
+        // Hàm tải slide theo index
+        function loadSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+
+            // Đổi src của iframe
+            slideFrame.src = slides[index].file;
+
+            // Cập nhật chỉ số hiển thị
+            currentSpan.textContent = index + 1;
+
+            // Cập nhật tên slide
+            slideNameSpan.textContent = slides[index].name;
+
+            // Cập nhật thanh tiến trình
+            const progressPercent = ((index + 1) / slides.length) * 100;
+            progressFill.style.width = progressPercent + '%';
+
+            // Bật/tắt nút prev/next
+            prevBtn.disabled = (index === 0);
+            nextBtn.disabled = (index === slides.length - 1);
+        }
+
+        // Sự kiện nút Previous
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadSlide(currentIndex);
+            }
+        });
+
+        // Sự kiện nút Next
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < slides.length - 1) {
+                currentIndex++;
+                loadSlide(currentIndex);
+            }
+        });
+
+        // Tải slide đầu tiên
+        loadSlide(0);
+
+        // (Tùy chọn) Lắng nghe phím mũi tên trái/phải để chuyển slide
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (!prevBtn.disabled) {
+                    prevBtn.click();
+                }
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (!nextBtn.disabled) {
+                    nextBtn.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
