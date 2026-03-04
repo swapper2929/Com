@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nhóm 1 - Câu 1: Kiến thức nghề nghiệp</title>
-    <!-- Google Font & Font Awesome -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>Nhóm 1 · Câu hỏi 1</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -15,163 +11,146 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(145deg, #f5f7fe 0%, #e9ecf7 100%);
+            background: linear-gradient(145deg, #f0f9ff 0%, #d9e9fa 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
         }
-
-        .slide {
+        .slide-card {
             max-width: 1000px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(4px);
-            border-radius: 2.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(156, 163, 175, 0.1);
-            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 4rem;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 30px 45px -20px rgba(0, 40, 60, 0.4),
+                        inset 0 1px 3px rgba(255,255,255,0.8);
+            border: 2px solid rgba(255,255,255,0.7);
             transition: all 0.2s ease;
         }
-
-        .header {
+        .group-tag {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 1.5rem;
-        }
-
-        .header .group-tag {
-            background: #1e293b;
+            gap: 0.6rem;
+            background: #1e4b62;
             color: white;
-            font-weight: 600;
-            font-size: 0.9rem;
-            padding: 0.4rem 1rem;
+            padding: 0.6rem 2rem;
             border-radius: 40px;
+            width: fit-content;
+            margin-bottom: 2.8rem;
+            font-weight: 500;
             letter-spacing: 0.3px;
+            font-size: 1.4rem;
+            box-shadow: 0 8px 14px rgba(0,40,50,0.2);
+            border: 1px solid #8fc5db;
         }
-
-        .header h2 {
-            font-weight: 600;
+        .group-tag i {
             font-size: 1.8rem;
-            color: #0f172a;
-            line-height: 1.3;
+            color: #ffde7a;
         }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.8rem;
-            margin: 2rem 0 1rem;
+        .question-box {
+            margin-bottom: 2rem;
         }
-
-        .card {
-            background: white;
-            border-radius: 1.8rem;
-            padding: 2rem 1.5rem;
-            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid rgba(226, 232, 240, 0.6);
-            text-align: center;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 25px -10px rgba(0, 0, 0, 0.1);
-            border-color: #cbd5e1;
-        }
-
-        .icon-wrapper {
-            font-size: 2.8rem;
-            color: #3b82f6;
-            margin-bottom: 1.2rem;
-            background: #eef2ff;
-            width: 5rem;
-            height: 5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 2rem;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .card h3 {
-            font-size: 1.3rem;
+        .question-number {
+            font-size: 1.5rem;
             font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 0.8rem;
+            color: #0b3f55;
+            background: rgba(255,255,240,0.7);
+            display: inline-block;
+            padding: 0.3rem 2rem;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            border: 1px solid white;
+            backdrop-filter: blur(4px);
+            margin-bottom: 1.5rem;
         }
-
-        .card p {
-            font-size: 1rem;
-            color: #334155;
-            line-height: 1.6;
+        h2 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #082b36;
+            text-shadow: 3px 3px 0 rgba(255, 255, 255, 0.5);
+            margin-bottom: 2.5rem;
+            word-break: break-word;
         }
-
-        .footer-note {
-            margin-top: 2.5rem;
+        .icon-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 1.8rem;
+            margin: 3.5rem 0 1.5rem;
+        }
+        .icon-item {
+            flex: 1 1 150px;
             text-align: center;
-            font-size: 0.95rem;
-            color: #64748b;
-            background: #f8fafc;
-            padding: 1rem;
-            border-radius: 60px;
-            border: 1px dashed #cbd5e1;
+            background: rgba(255,255,255,0.5);
+            padding: 2rem 1rem;
+            border-radius: 3rem;
+            border: 2px solid white;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 10px 20px -8px rgba(0,60,80,0.3);
+            transition: transform 0.2s;
         }
-
+        .icon-item i {
+            font-size: 4.5rem;
+            color: #1c5d7e;
+            filter: drop-shadow(2px 6px 6px rgba(0,60,80,0.2));
+        }
+        .icon-item span {
+            display: block;
+            margin-top: 1rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #083b4a;
+        }
+        .footer-note {
+            text-align: right;
+            font-size: 1.2rem;
+            margin-top: 3rem;
+            color: #316d85;
+            border-top: 2px dashed #9ac2d6;
+            padding-top: 1.8rem;
+            font-style: italic;
+        }
         .footer-note i {
-            color: #3b82f6;
-            margin-right: 0.4rem;
+            margin-left: 0.5rem;
+            color: #f4b942;
         }
-
         @media (max-width: 600px) {
-            .slide { padding: 1.8rem; }
-            .header h2 { font-size: 1.4rem; }
+            h2 { font-size: 2.4rem; }
+            .slide-card { padding: 2rem 1.5rem; }
+            .icon-item i { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
-    <div class="slide">
-        <div class="header">
-            <span class="group-tag"><i class="fas fa-graduation-cap" style="margin-right: 6px;"></i>Nhóm 1</span>
-            <h2>Một nghề thường đòi hỏi những kiến thức gì?</h2>
+    <div class="slide-card">
+        <div class="group-tag">
+            <i class="fas fa-users"></i> Nhóm 1: Sở thích cá nhân
         </div>
-
-        <div class="content-grid">
-            <!-- Kiến thức chuyên môn -->
-            <div class="card">
-                <div class="icon-wrapper"><i class="fas fa-brain"></i></div>
-                <h3>Kiến thức chuyên môn</h3>
-                <p>Nền tảng cốt lõi: giải phẫu (bác sĩ), sức bền vật liệu (kỹ sư), lập trình (developer)...</p>
-            </div>
-            <!-- Kiến thức quy trình, kỹ thuật -->
-            <div class="card">
-                <div class="icon-wrapper"><i class="fas fa-gears"></i></div>
-                <h3>Quy trình & kỹ thuật</h3>
-                <p>Các bước thực hiện, vận hành máy móc, sử dụng công cụ, phần mềm chuyên dụng.</p>
-            </div>
-            <!-- Kiến thức pháp luật -->
-            <div class="card">
-                <div class="icon-wrapper"><i class="fas fa-gavel"></i></div>
-                <h3>Pháp luật & quy định</h3>
-                <p>Luật lao động, thuế, an toàn thực phẩm, tiêu chuẩn ngành – tùy theo lĩnh vực.</p>
-            </div>
-            <!-- Kiến thức xã hội -->
-            <div class="card">
-                <div class="icon-wrapper"><i class="fas fa-globe"></i></div>
-                <h3>Xã hội & thực tế</h3>
-                <p>Hiểu thị trường, khách hàng, văn hoá để áp dụng công việc hiệu quả, phù hợp.</p>
-            </div>
+        <div class="question-box">
+            <div class="question-number"><i class="far fa-comment-dots" style="margin-right: 8px;"></i> Câu hỏi 1</div>
+            <h2>Em thích làm việc với con người, máy móc hay thiên nhiên?</h2>
         </div>
-
+        <!-- minh họa trực quan ba lĩnh vực -->
+        <div class="icon-row">
+            <div class="icon-item">
+                <i class="fas fa-user-friends"></i>
+                <span>Con người</span>
+            </div>
+            <div class="icon-item">
+                <i class="fas fa-robot"></i>
+                <span>Máy móc</span>
+        </div>
         <div class="footer-note">
-            <i class="fas fa-lightbulb"></i> Kiến thức đa dạng – sự kết hợp hài hòa giúp bạn làm chủ nghề nghiệp.
+            <i class="fas fa-lightbulb"></i> Em Thích Làm Việc Với : Máy móc: Mang lại sự chính xác tuyệt đối, logic và khả năng thực thi không mệt mỏi.
+​Con người: Cung cấp sự sáng tạo, cảm xúc và khả năng xử lý những tình huống linh hoạt mà thuật toán chưa làm được.
+​Kết luận: Kết hợp cả hai giúp tối ưu hóa hiệu suất công việc.
         </div>
     </div>
 </body>
